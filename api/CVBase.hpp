@@ -1,3 +1,7 @@
+
+#ifndef CVBase_HPP
+#define CVBase_HPP
+
 #include<iostream>
 #include<vector>
 #include<cstdarg>
@@ -99,3 +103,5 @@ class Matrix2 : public Array<X>
 };
 
 }
+
+#endif
