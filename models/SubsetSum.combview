@@ -1,0 +1,8 @@
+
+# CombView model for NP-Complete SubsetSum
+# Igor M. Coelho (2017)
+
+SubsetSum(I: set of int){
+   S is subset(I);
+   sum{k in S} k = sum{j in minus(I,S)} j
+}
