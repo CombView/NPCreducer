@@ -2,7 +2,7 @@
 
 using namespace combview;
 
-struct SubsetSum
+struct SubsetSum //why struct?
 {
    Set<int>& I;
 

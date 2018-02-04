@@ -5,6 +5,7 @@
 #include<iostream>
 #include<vector>
 #include<cstdarg>
+#include<algorithm>
 
 using namespace std;
 
@@ -27,6 +28,10 @@ class Set {
 
 	int card() const {
 		return elements.size();
+	}
+	
+	~Set(){
+		std::for_each(elements.begin(), elements.end(), [](X* e){ delete e; } );
 	}
 };
 
