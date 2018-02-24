@@ -1,0 +1,10 @@
+
+# CombView model for NP-Complete BinPacking with K bins of capacity Q
+# Igor M. Coelho (2018)
+
+BinPacking(I: set of real, Q: real, K: integer){
+   K > 0;
+   P is partition(I);
+   card(P) <= K;
+   forall{B in P}: sum{i in B} i <= Q}
+}
