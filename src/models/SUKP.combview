@@ -13,9 +13,14 @@ SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, bigraph<
    sum{j in N | degree(j, G2) > 0} a[j] <= b;
 }
 
+# =====================
+#      model v2
+# ---------------------
+
+# using non-trivial property
 SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, bigraph<M, N> : G){
    set : S is subset(M);
    maximize @fo : sum{i in S} c[i];
-   G2 := induced_subgraph(union(S, N), G);
-   sum{j in N | degree(j, G2) > 0} a[j] <= b;
+   G2 := induced_subgraph(union(S, N), G) | G2 := non_trivial_vertex(G2); # maybe better to create a G3? or allow this?
+   sum{j in intersect(N, vertex(G2))} a[j] <= b;
 }
