@@ -57,13 +57,20 @@ type<x, pack<y | cset(y)> array = native;                       # index or csets
 # ------------------------
 
 # we have mainly two applications of forall iterative structure:
-# - forall{ $non_det } expr<$x>             => pack<$x>
-# - forall{ $non_det } @label : constraint  => pack<constraint>
+# - forall{ $iterate } expr<$x>             => pack<$x>
+# - forall{ $iterate } @label : constraint  => pack<constraint>
 #
 # The first forall 'evaluates' several expressions of type $x and returns a pack of it.
 #    Examples are: sets (on union/intersection loops) and integers (on sum/product loops)
 # The second forall 'generates' several constraints and returns a pack of it.
 #    Examples are: regular constraint generations on models.
+#
+# An interesting thing is that variables generated on $iterate block would only exist on that scope (constraint).
+# Thus, it could be seen as a replacement variable, to be used on labels and other places.
+# Example:
+#  - forall{i in S} @constraint_${i} : i < 10;   # we could theoretically allow both 'i < 10' or '$i < 10'
+$ To have a complete model, one would need to have deterministic evaluation of forall.
+# Maybe, non-determinism could also be useful (for cuts?). TODO: think about.
 
 # =======
 #  union
