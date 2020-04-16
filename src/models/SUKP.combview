@@ -10,7 +10,7 @@
 #      model v1
 # ---------------------
 
-SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, bigraph<M, N> : G){
+SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, bigraph<M, N> : G){
    set : S is subset(M);
    maximize @fo : sum{i in S} c[i];
    G2 := induced_subgraph(union(S, N), G);
@@ -22,10 +22,10 @@ SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, bigraph<
 # ---------------------
 
 # using non-trivial property
-SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, bigraph<M, N> : G){
+SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, bigraph<M, N> : G){
    set : S is subset(M);
    maximize @fo : sum{i in S} c[i];
-   G2 := induced_subgraph(union(S, N), G) | G2 := non_trivial_vertex(G2); # maybe better to create a G3? or allow this?
+   G2 := induced_subgraph(union(S, N), G) | non_trivial_vertex(G2); # maybe better to create a G3? or allow this?
    sum{j in intersect(N, vertex(G2))} a[j] <= b;
 }
 
@@ -35,7 +35,7 @@ SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, bigraph<
 # ---------------------
 
 # subseteq(A,B) is a deterministic verification procedure, returns true if A \subseteq B (different than subset choice function)
-SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, iarray<M, set I | subseteq(I, N) > : Ni){
+SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, array<set I | subseteq(I, N), M> : Ni){
    set : S is subset(M);
    maximize @fo : sum{i in S} c[i];
    sum{j in union{i in S} Ni[i]} a[j] <= b;
@@ -46,7 +46,7 @@ SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, iarray<M
 # ---------------------
 
 # subseteq(A,B) is a deterministic verification procedure, returns true if A \subseteq B (different than subset choice function)
-SUKP(set : M, set : N, iarray<N, int> : a, iarray<M, int> : c, int : b, iarray<M, set I | subseteq(I, N) > : Ni){
+SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, array<set I | subseteq(I, N), M> : Ni){
    maximize @fo : sum{i in M} c[i]*x[i];
    @1b : sum{j in N} a[j] * y[j] <= b;
    forall{i in M, j in Ni[i]} @1c_${i}_$j : x[i] <= y[j];

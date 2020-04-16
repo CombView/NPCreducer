@@ -1,0 +1,42 @@
+#
+# some basic language definitions
+# Igor M. Coelho (2020)
+
+#
+# definition for native 'array'
+#
+type<x | istype(x)> array = native;                             # just type: array<int>
+type<x, i | type(i)=index> array = native;                      # mix type and non-type indexer: array<int, 5> # means: array<int, {0..4}>
+type<x, s | cset(s)> array = native;                            # single cset: array<int, {2..5}>
+type<x, i | type(i)=index, j | type(j)=index> array = native;   # two index: array<int, 5, 5> # means: array<int, {0..4}, {0..4}>
+type<x, pack<y | type(y)=set<index> | cset(y)>> array = native; # only csets: array<int, {2..5}, {3..8}>
+type<x, pack<y | cset(y)> array = native;                       # index or csets: array<int, 5, {3..8}> # meaning: array<int, {0..4}, {3..8}>
+
+# we consider however that a cset(s) for s=5 will yield true, as it would generate a 0..4 range.
+# cset(5) => true
+# cset({0..4}) => true
+# cset({3,4,5,6}) => true
+# cset({}) => true
+# cset(5.6) => false
+# cset({1,5,8}) => false
+
+# we consider keyword 'istype' to distinguish a type from non-type parameter.
+#istype :: 'token' -> boolean # (KEYWORD, not function)
+
+# ----------------------------------------------------------------------------
+# at this moment, we don't allow different/multiple types for regular structures, like:
+#   - set< <int><float> >
+# otherwise it becomes very complex to properly define and code them, also to explore the structure.
+#
+#type<x, pack<y | <type(y)=set<index>><type(y)=index>>> array = native;  # mix type and non-type indexer: array<int, 5, {3..8}> # meaning: array<int, {0..4}, {3..8}>
+#
+#
+# it's also not currently possible to build multiple matching lists on functions.
+#
+# optional matching list
+#function<x | <integer(x)><float(x)>> ...
+#function<x | integer(x)><x | float(x)> ...
+#
+# ----------------------------------------------------------------------------
+
+# EOF
