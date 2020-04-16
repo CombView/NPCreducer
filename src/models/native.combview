@@ -3,6 +3,13 @@
 # Igor M. Coelho (2020)
 
 #
+# definition for native 'pack'
+#
+type<x | istype(x)> pack = native;
+# if 'pack' is not initialized directly, one can just define how many packed elements.
+type<x | istype(x), n | index(n)> pack = native;
+
+#
 # definition for native 'array'
 #
 type<x | istype(x)> array = native;                             # just type: array<int>

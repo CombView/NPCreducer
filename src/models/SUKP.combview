@@ -50,8 +50,8 @@ SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, array<set 
    maximize @fo : sum{i in M} c[i]*x[i];
    @1b : sum{j in N} a[j] * y[j] <= b;
    forall{i in M, j in Ni[i]} @1c_${i}_$j : x[i] <= y[j];
-   pack<card(M), binary> : x;                  # x variables (pack makes them independent)
-   pack<card(N), binary> : y;                  # y variables (pack makes them independent)
+   pack<binary, card(M)> : x;                  # x variables (pack makes them independent)
+   pack<binary, card(N)> : y;                  # y variables (pack makes them independent)
    forall{i in M} : x[i] is binary();          # must choose x[i]
    forall{j in N} : y[j] is binary();          # must choose y[j] (or maybe just relax this as real)
 }
