@@ -46,7 +46,7 @@ SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, array<set 
 # ---------------------
 
 # subseteq(A,B) is a deterministic verification procedure, returns true if A \subseteq B (different than subset choice function)
-SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, array<set I | subseteq(I, N), M> : Ni){
+SUKP(set<index> : M, set : N, array<int, N> : a, array<int, M> : c, int : b, array<set I | subseteq(I, N), M> : Ni){
    maximize @fo : sum{i in M} c[i]*x[i];
    @1b : sum{j in N} a[j] * y[j] <= b;
    forall{i in M, j in Ni[i]} @1c_${i}_$j : x[i] <= y[j];
@@ -55,3 +55,6 @@ SUKP(set : M, set : N, array<int, N> : a, array<int, M> : c, int : b, array<set 
    forall{i in M} : x[i] is binary();          # must choose x[i]
    forall{j in N} : y[j] is binary();          # must choose y[j] (or maybe just relax this as real)
 }
+
+
+# ==================

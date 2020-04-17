@@ -13,5 +13,26 @@
 #
 # This is harder to optimize (cut out 'subset'), but easier to parse.
 #
+# ---------
 #
-
+# Also note that filters apply *before* the object is actually created by selection/choice operator 'is'.
+# This also allows to attach *properties* to the generated object, which are verified/validated during generation.
+#
+# For example:
+#   - S is subset(X) | card(S) > 1
+#
+# Another way to write it (using output function replacement variable '$?'):
+#   - S is subset(X) | card($?) > 1
+# 
+# In this case, output filter for '$?' is attached directly on lazy function 'subset'.
+# This allows attaching properties to existing types, without explicitly declaring them on generating function.
+#
+# An example for permutation (make it in a circular array):
+#   - P is permutation({0..5}) | circular($?)
+#
+# The 'circular' property attaches the 'next(P, i)' for the last 'i', which is usually not existing on a regular array.
+#
+# A property is part of the object itself, not its type. 
+# This can be further discussed, as it leads to some 'heteronegenity' on elements (e.g., two elements in array 
+#    with distinct properties), but for now, it looks like a good path to follow.
+#
