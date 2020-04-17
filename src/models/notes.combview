@@ -1,0 +1,17 @@
+# important notes on cascade non-determinism (04-2020)
+#
+#
+# When considering a 'choice' parameter on input, keep in mind that output will also be non-deterministic. 
+# More complicated is to effectively handle cases where two nd functions are combined, without explicit choice being made (by 'is' operator).
+# Example: 
+#  - S is subset(X);         # single nd decision on output 'choice'
+#  - S is subset(subset(X)); # on practice, same as above. on theory, double choice could be made (without explicit 'is')
+# Since this is not useful, it's better to keep 'choice' option on outputs only, but consider it on parameter for the future.
+# 
+# A final option is to apply 'is' on cascade, explicitly delegating the choice:
+#  - S is subset(is subset(X)); # although a little bit strange, it makes clear that two choices are made, not a single one.
+#
+# This is harder to optimize (cut out 'subset'), but easier to parse.
+#
+#
+
