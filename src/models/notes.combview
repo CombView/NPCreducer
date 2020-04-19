@@ -63,3 +63,24 @@
 # We are not here to propose easy things anyway, let's just do it ;)
 # -------------------------------------------------------------------
 #
+#
+#  ========= Imperative Programming Extensions ========
+#
+#  We can provide imperative extensions, by means of symbol '!'.
+#  Example:
+#     - printf!("Hello World!");
+#  This can appear inside an imperative block "!{}" (now, each line sequence is respected):
+#     - forall!{i in S} : !{ printf!("%d\n", $i ); };
+#     - for!{i in S} : !{ printf!("%d\n", $i ); };       # should we allow this 'for' ?
+#     - if!(x < 10) : !{ printf!("less than 10\n"); };
+#
+#  Maybe it's good to enforce imperative behavior (with '!'), or maybe it's too pedantic...
+#  Anyway, one can simply link to external functions (via ndobjects CombView API):
+#     function! my_imperative_function(set: s) -> int = native("my_function", "dynamic_library.so");
+#
+#  Do not confuse "if! :" with if-then-else, which is valid on models:
+#  Example:
+#    -  int : x := if y < 5 then 10 else 20;
+#    -  set : s := if y < 5 then {1,2} else {1,2,3};
+#
+#  More is coming.
