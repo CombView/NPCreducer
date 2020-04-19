@@ -3,9 +3,13 @@
 # Igor M. Coelho (2020)
 
 #
+# note: replacement $variables can assume 'type' and 'non-type' parameters.
+#
+
+#
 # definition for native 'pack'
 #
-type<x | istype(x)> pack = native;
+type<x | istype(x)> pack = native;                 # should we use: "type<x | istype($x)>" instead?
 # if 'pack' is not initialized directly, one can just define how many packed elements.
 type<x | istype(x), n | index(n)> pack = native;
 
@@ -88,7 +92,7 @@ function<x> union (pack<set<$x>> : psets) -> set<$x>;
 # =======
 #   sum
 # -------
-function<x | numeric(x)> sum (pack<$x> : pvals) -> $x;
+function<x | numeric(x)> sum (pack<$x> : pvals) -> $x;       # should we use "function<x | numeric($x)>" instead?
 
 # sum examples:
 #  - sum( 1, 3, 5 )       => 9

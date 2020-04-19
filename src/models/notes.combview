@@ -1,13 +1,13 @@
 # important notes on cascade non-determinism (04-2020)
 #
 #
-# When considering a 'choice' parameter on input, keep in mind that output will also be non-deterministic. 
+# When considering a 'choice' parameter on input, keep in mind that output will also be non-deterministic.
 # More complicated is to effectively handle cases where two nd functions are combined, without explicit choice being made (by 'is' operator).
-# Example: 
+# Example:
 #  - S is subset(X);         # single nd decision on output 'choice'
 #  - S is subset(subset(X)); # on practice, same as above. on theory, double choice could be made (without explicit 'is')
 # Since this is not useful, it's better to keep 'choice' option on outputs only, but consider it on parameter for the future.
-# 
+#
 # A final option is to apply 'is' on cascade, explicitly delegating the choice:
 #  - S is subset(is subset(X)); # although a little bit strange, it makes clear that two choices are made, not a single one.
 #
@@ -23,7 +23,7 @@
 #
 # Another way to write it (using output function replacement variable '$?'):
 #   - S is subset(X) | card($?) > 1
-# 
+#
 # In this case, output filter for '$?' is attached directly on lazy function 'subset'.
 # This allows attaching properties to existing types, without explicitly declaring them on generating function.
 #
@@ -32,7 +32,16 @@
 #
 # The 'circular' property attaches the 'next(P, i)' for the last 'i', which is usually not existing on a regular array.
 #
-# A property is part of the object itself, not its type. 
-# This can be further discussed, as it leads to some 'heteronegenity' on elements (e.g., two elements in array 
+# One implementation mechanism can be seen this way.
+#   Filter 'circular' is attached as a callback lambda that processes output ($?) and, if it passes, it attaches itself as a property.
+#   Output type could still be: array<index> : P is permutation({0..5}) | circular($?);  # Or more precisely: array<index, 5>
+#   It's hard to see a way of putting 'properties' appearing on variable type... looks like it's 'outside' of it, like 'surrounding'.
+#   This way, 'property' is attached to the object P itself, not to its type. It can coexist with other
+#         arrays, in the same way: set<array> : X := { [1,2,3] , [1,2]}; # which is each type?
+#   This raises the question: "Are 'array<index, 3>' and 'array<index, 2>' compatible?". They should: under the 'umbrella' of 'array<index>'.
+#   A 'set<array<index,3>>' should not allow this 'X' (second element is not compatible with explicit type).
+#
+# A property is part of the object itself, not its type.
+# This can be further discussed, as it leads to some 'heterogeneity' on elements (e.g., two elements in array
 #    with distinct properties), but for now, it looks like a good path to follow.
 #
